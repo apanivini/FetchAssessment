@@ -1,0 +1,43 @@
+Subject: Data Quality Review: Questions, Key Findings, Proposed Solutions, and Next Steps
+
+Hi,
+
+I wanted to share an update on the recent data quality issues we've identified while building the data model for the data provided on Brands, Users and Receipts. Below, I’ve summarized my observations, questions, and proposed next steps:
+
+1.Questions Related to the Data
+
+Is there any existing documentation or rules governing how the composite primary keys (e.g., barcode and brandcode in the Brands table) are structured and maintained?
+Could you please clarify if there are specific use cases that rely on certain date columns (e.g., createdDate and lastLogin) to ensure their correctness?
+Do any downstream processes depend on duplicate data or null values that we may remove during cleanup for having the clean data?
+
+2.We have discovered these Data Quality Issues while doing the preliminary checks
+Duplicate composite keys (barcode and brandcode) in the Brands table.
+Invalid date ranges where lastLogin occurred earlier than createdDate in the Users table.
+Missing or null values in critical fields that are essential for linking tables.
+These issues were flagged during validation checks using scripts we’ve written to analyze uniqueness, consistency, and completeness in the data.
+
+3.To Resolve the Data Quality Issues we will require the following
+Insights into the impact of duplicates or invalid date ranges on key reports or workflows.
+A clear understanding of the rules governing data integrity for composite keys and timestamps.
+Historical logs or metadata that could shed light on how these issues originated (e.g., ingestion errors, user inputs).
+
+4. Additional Information Needed for Optimization
+Data Volume: Understanding expected data growth rates to optimize for scalability.
+Upstream and Downstream Dependencies: Insights into how upstream systems populate these tables (e.g., sources for barcode and brandcode) and how downstream applications will be utilising this data.
+Business KPIs: Clarity on metrics or benchmarks that the optimized datasets should achieve to align with business objectives.
+
+5. Performance and Scaling Concerns
+Anticipated Challenges:
+High cardinality in the RewardsReceiptItems table could slow down queries joining across multiple tables.
+Ensuring low-latency access to frequently queried columns like brandname and totalSpent.
+Proposed Solutions:
+Introduce partitioning and indexing strategies on high-volume tables.
+Cache frequently accessed results to reduce computation time for repeated queries.
+Establish validation pipelines to proactively detect and resolve data issues before production loads.
+
+I’ll continue working on resolving these issues and will keep you updated on progress. If you or your team have insights or additional context on any of the above points, I’d greatly appreciate it.
+
+Please feel free to reach out to me for any additional information needed.
+
+Best regards,
+Vinuthna
